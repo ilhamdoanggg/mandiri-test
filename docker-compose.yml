@@ -29,7 +29,7 @@ services:
     build:
       context: ./
       dockerfile: dockerfile
-      
+
 networks:
   music-api:
     name: music-api
