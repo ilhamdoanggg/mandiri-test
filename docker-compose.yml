@@ -1,0 +1,35 @@
+version: "3.7"
+services:
+  postgres:
+    container_name: postgres
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=secrect
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=music-api
+    ports:
+      - '5555:5432'
+    volumes:
+      - database:/var/lib/postgresql/data
+    networks:
+      - music-api
+  music-api:
+    container_name: music-api
+    image: music-api
+    restart: always
+    environment:
+      - PORT=9090
+      - DRIVER= jdbc:postgresql
+      - DB_URL= postgres
+      - DB_USER=postgres
+      - DB_PASS=secret
+    ports:
+      - 9090:9090
+    build:
+      context: ./
+      dockerfile: dockerfile
+      
+networks:
+  music-api:
+    name: music-api
